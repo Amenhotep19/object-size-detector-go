@@ -101,6 +101,24 @@ The `-min` flag controls the minimum size of the area the part needs to occupy t
 
 The `-max` flag controls the maximum size of the area the part needs to occupy to be considered good
 
+### Docker
+
+You can also build a Docker image and then run the program in a Docker container. First you need to build the image. You can use the `Dockerfile` present in the cloned repository and build the Docker image by running the following command:
+
+```
+docker build -t object-size-detector-go .
+```
+
+This will produce an image called `object-size-detector-go` which contains the built binary. Since this docker image has an [ENTRYPOINT](https://docs.docker.com/engine/reference/builder/#entrypoint) defined you can run the image as an executable using the following command:
+
+```
+docker run -it --rm object-size-detector-go -h
+```
+
+### Azure
+
+If you'd like to know how you can take advantage of more advanced build system provided by [Microsoft Azure Cloud](https://azure.microsoft.com/) , please check out the Azure guide [here](./azure.md). Following the steps in the guide you can build Docker container and push it into Azure Container Registry to make it available online.
+
 ## Sample videos
 
 There are several videos available to use as sample videos to show the capabilities of this application. You can download them by running these commands from the `assembly-line-measurements` directory:
