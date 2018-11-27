@@ -425,6 +425,12 @@ monitor:
 			break monitor
 		}
 	}
+	// unblock resultsChan if necessary
+	select {
+	case <-resultsChan:
+	default:
+		// resultsChan was empty, proceed
+	}
 	// signal all goroutines to finish
 	close(doneChan)
 	// wait for all goroutines to finish
