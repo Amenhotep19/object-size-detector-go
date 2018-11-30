@@ -9,4 +9,4 @@ if [ -e "env.sh" ]; then
     source env.sh
 fi
 
-exec ./build/monitor "$ARGS"
+exec ./build/monitor $ARGS

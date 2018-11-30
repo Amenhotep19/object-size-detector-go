@@ -4,7 +4,7 @@ INSTALL=go install
 BUILDPATH=./build
 PACKAGES=$(shell go list ./... )
 
-.PHONY: clean build all godep install
+.PHONY: clean build all godep install docker
 
 all: test build
 
@@ -25,6 +25,9 @@ godep:
 
 dep:
 	dep ensure -v
+
+docker:
+	docker build -t object-size-detector-go .
 
 check:
 	for pkg in ${PACKAGES}; do \
