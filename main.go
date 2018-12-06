@@ -188,6 +188,8 @@ func detectBlob(img *gocv.Mat) image.Rectangle {
 func frameRunner(framesChan <-chan *frame, doneChan <-chan struct{},
 	resultsChan chan<- *Result, pubChan chan<- *Result) error {
 
+	// frame is image frame
+	frame := new(frame)
 	// Result stores detection results
 	result := new(Result)
 	// Part is assembly object part
@@ -199,8 +201,17 @@ func frameRunner(framesChan <-chan *frame, doneChan <-chan struct{},
 		select {
 		case <-doneChan:
 			fmt.Printf("Stopping frameRunner: received stop sginal\n")
+			// close results channel
+			close(resultsChan)
+			// close publish channel
+			if pubChan != nil {
+				close(pubChan)
+			}
 			return nil
-		case frame := <-framesChan:
+		case frame = <-framesChan:
+			if frame == nil {
+				continue
+			}
 			// let's make a copy of the original
 			img := gocv.NewMat()
 			frame.img.CopyTo(&img)
@@ -425,14 +436,12 @@ monitor:
 			break monitor
 		}
 	}
-	// unblock resultsChan if necessary
-	select {
-	case <-resultsChan:
-	default:
-		// resultsChan was empty, proceed
-	}
 	// signal all goroutines to finish
+	close(framesChan)
 	close(doneChan)
+	for range resultsChan {
+		// collect any outstanding results
+	}
 	// wait for all goroutines to finish
 	wg.Wait()
 }
