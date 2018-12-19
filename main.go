@@ -256,7 +256,7 @@ func frameRunner(framesChan <-chan *frame, doneChan <-chan struct{},
 					// in 10 consecutive frames mark the part as defected
 					if part.now.Defect && part.defectFrames > 10 {
 						// if it didn't have a defect already
-						if !part.prev.Defect {
+						if !result.Defect {
 							// set defect and increment total defect count
 							result.Defect = true
 							result.TotalDefects++
@@ -271,6 +271,7 @@ func frameRunner(framesChan <-chan *frame, doneChan <-chan struct{},
 				}
 			} else {
 				// no part detected -- empty belt: reset counts
+				result.Defect = false
 				part.okFrames = 0
 				part.defectFrames = 0
 			}
