@@ -49,14 +49,10 @@ var (
 	deviceID int
 	// input is path to image or video file
 	input string
-	// min is minimum part area of assembly objec
+	// min is minimum part area of assembly object
 	min int
 	// max is maximum part area of assembly object
 	max int
-	// backend is inference backend
-	backend int
-	// target is inference target
-	target int
 	// publish is a flag which instructs the program to publish data analytics
 	publish bool
 	// rate is number of seconds between analytics are collected and sent to a remote server
@@ -68,10 +64,8 @@ var (
 func init() {
 	flag.IntVar(&deviceID, "device", -1, "Camera device ID")
 	flag.StringVar(&input, "input", "", "Path to image or video file")
-	flag.IntVar(&backend, "backend", 0, "Inference backend. 0: Auto, 1: Halide language, 2: Intel DL Inference Engine")
 	flag.IntVar(&min, "min", 20000, "Minimum part area of assembly object")
 	flag.IntVar(&max, "max", 30000, "Maximum part area of assembly object")
-	flag.IntVar(&target, "target", 0, "Target device. 0: CPU, 1: OpenCL, 2: OpenCL half precision, 3: VPU")
 	flag.BoolVar(&publish, "publish", false, "Publish data analytics to a remote server")
 	flag.IntVar(&rate, "rate", 1, "Number of seconds between analytics are sent to a remote server")
 	flag.Float64Var(&delay, "delay", 5.0, "Video playback delay")
