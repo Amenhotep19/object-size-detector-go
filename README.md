@@ -159,7 +159,7 @@ There are several videos available to use as sample videos to show the capabilit
 ```shell
 mkdir resources
 cd resources
-wget https://github.com/intel-iot-devkit/sample-videos/raw/master/bolt-detection.mp4
+wget https://github.com/intel-iot-devkit/sample-videos/raw/master/bolt-multi-size-detection.mp4
 cd ..
 ```
 
@@ -167,7 +167,7 @@ To then execute the code using one of these sample videos, run the following com
 
 ```shell
 cd build
-./monitor -min=10000 -max=30000 -input=../resources/bolt-detection.mp4
+./monitor -min=20000 -max=30000 -input=../resources/bolt-multi-size-detection.mp4
 ```
 
 ### Machine to machine messaging with MQTT
