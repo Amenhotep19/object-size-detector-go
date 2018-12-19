@@ -399,7 +399,7 @@ func main() {
 
 	// open display window
 	window := gocv.NewWindow(name)
-	window.SetWindowProperty(gocv.WindowPropertyFullscreen, gocv.WindowAutosize)
+	window.SetWindowProperty(gocv.WindowPropertyAutosize, gocv.WindowAutosize)
 	defer window.Close()
 
 	// prepare input image matrix
