@@ -1,3 +1,26 @@
+/*
+* Copyright (c) 2018 Intel Corporation.
+*
+* Permission is hereby granted, free of charge, to any person obtaining
+* a copy of this software and associated documentation files (the
+* "Software"), to deal in the Software without restriction, including
+* without limitation the rights to use, copy, modify, merge, publish,
+* distribute, sublicense, and/or sell copies of the Software, and to
+* permit persons to whom the Software is furnished to do so, subject to
+* the following conditions:
+*
+* The above copyright notice and this permission notice shall be
+* included in all copies or substantial portions of the Software.
+*
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+* EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+* NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+* LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+* OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+* WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
 package main
 
 import (
@@ -118,8 +141,6 @@ func messageRunner(doneChan <-chan struct{}, pubChan <-chan *Result, c *MQTTClie
 			return nil
 		}
 	}
-
-	return nil
 }
 
 // detectStatus detects part status from the blob and returns it
@@ -240,7 +261,7 @@ func frameRunner(framesChan <-chan *frame, doneChan <-chan struct{},
 					// if previously seen part has had a defect detected
 					// in 10 consecutive frames mark the part as defected
 					if part.now.Defect && part.defectFrames > 10 {
-						// if it didnt have a defect already
+						// if it didn't have a defect already
 						if !part.prev.Defect {
 							// set defect and increment total defect count
 							result.Defect = true
@@ -272,8 +293,6 @@ func frameRunner(framesChan <-chan *frame, doneChan <-chan struct{},
 			img.Close()
 		}
 	}
-
-	return nil
 }
 
 // NewCapture creates new video capture from input or camera backend if input is empty and returns it.
@@ -340,18 +359,24 @@ func main() {
 
 	// frames channel provides the source of images to process
 	framesChan := make(chan *frame, 1)
+
 	// errChan is a channel used to capture program errors
 	errChan := make(chan error, 2)
+
 	// doneChan is used to signal goroutines they need to stop
 	doneChan := make(chan struct{})
+
 	// resultsChan is used for detection distribution
 	resultsChan := make(chan *Result, 1)
+
 	// sigChan is used as a handler to stop all the goroutines
 	sigChan := make(chan os.Signal, 1)
 	signal.Notify(sigChan, os.Interrupt, os.Kill, syscall.SIGTERM)
+
 	// pubChan is used for publishing data analytics stats
 	var pubChan chan *Result
-	// waitgroup to synchronise all goroutines
+
+	// waitgroup to synchronize all goroutines
 	var wg sync.WaitGroup
 
 	if publish {
@@ -416,32 +441,39 @@ monitor:
 		default:
 			// do nothing; just display latest results
 		}
+
 		// display detected measurements
 		gocv.PutText(&screen, fmt.Sprintf("Measurement: %d Expected range: [%d - %d] Defect: %v",
 			result.Rect.Size().X*result.Rect.Size().Y, min, max, result.Defect), image.Point{0, 15},
 			gocv.FontHersheySimplex, 0.5, color.RGBA{0, 255, 0, 0}, 2)
+
 		// defect detection results
 		gocv.PutText(&screen, fmt.Sprintf("%s", result), image.Point{0, 40},
 			gocv.FontHersheySimplex, 0.5, color.RGBA{0, 255, 0, 0}, 2)
+
 		// if defect then draw red rectangle; otherwise draw green
 		if result.Defect {
 			gocv.Rectangle(&screen, result.Rect, color.RGBA{255, 0, 0, 0}, 2)
 		} else if !result.Rect.Empty() {
 			gocv.Rectangle(&screen, result.Rect, color.RGBA{0, 255, 0, 0}, 2)
 		}
+
 		// show the image in the window, and wait 1 millisecond
 		window.IMShow(screen)
 
-		if window.WaitKey(int(delay)) >= 0 {
+		// press ESC key to exit
+		if window.WaitKey(int(delay)) == 27 {
 			break monitor
 		}
 	}
+
 	// signal all goroutines to finish
 	close(framesChan)
 	close(doneChan)
 	for range resultsChan {
 		// collect any outstanding results
 	}
+
 	// wait for all goroutines to finish
 	wg.Wait()
 }
