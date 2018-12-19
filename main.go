@@ -131,7 +131,7 @@ func messageRunner(doneChan <-chan struct{}, pubChan <-chan *Result, c *MQTTClie
 		case <-pubChan:
 			// we discard messages in between ticker times
 		case <-doneChan:
-			fmt.Printf("Stopping messageRunner: received stop sginal\n")
+			fmt.Printf("Stopping messageRunner: received stop signal\n")
 			return nil
 		}
 	}
@@ -215,7 +215,7 @@ func frameRunner(framesChan <-chan *frame, doneChan <-chan struct{},
 	for {
 		select {
 		case <-doneChan:
-			fmt.Printf("Stopping frameRunner: received stop sginal\n")
+			fmt.Printf("Stopping frameRunner: received stop signal\n")
 			// close results channel
 			close(resultsChan)
 			// close publish channel
