@@ -2,46 +2,36 @@
 
 
 [[projects]]
-  digest = "1:184008c955d6a3226b700c13ed0e875a7a051a759618f9bccba9b5c99f17faa5"
   name = "github.com/eclipse/paho.mqtt.golang"
   packages = [
     ".",
-    "packets",
+    "packets"
   ]
-  pruneopts = "UT"
   revision = "36d01c2b4cbeb3d2a12063e4880ce30800af9560"
   version = "v1.1.1"
 
 [[projects]]
   branch = "dev"
-  digest = "1:6d89e84f89323c15d5ee92b325b6dce01ef8817654f21a791bc036bc458f074d"
   name = "gocv.io/x/gocv"
   packages = [
     ".",
-    "openvino",
+    "openvino"
   ]
-  pruneopts = "UT"
-  revision = "eeef30738ffb7d94e086f2fbde4a6aa857dd3cf1"
+  revision = "31bfec2476f13763b30ef519daba5f67a3a3d17e"
 
 [[projects]]
   branch = "master"
-  digest = "1:50095e42352dba1c6ab2cec7e03b24fb4b513123f41d4ab4dbd2627c25fe18b8"
   name = "golang.org/x/net"
   packages = [
     "internal/socks",
     "proxy",
-    "websocket",
+    "websocket"
   ]
-  pruneopts = "UT"
-  revision = "adae6a3d119ae4890b46832a2e88a95adc62b8e7"
+  revision = "e147a9138326bc0e9d4e179541ffd8af41cff8a9"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  input-imports = [
-    "github.com/eclipse/paho.mqtt.golang",
-    "gocv.io/x/gocv",
-    "gocv.io/x/gocv/openvino",
-  ]
+  inputs-digest = "27372bacf3554417c9a85bf5aa3abac2133827d2f1ec8f53722eb38e4b00221f"
   solver-name = "gps-cdcl"
   solver-version = 1
