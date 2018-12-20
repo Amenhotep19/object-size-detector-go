@@ -1,11 +1,11 @@
 FROM ubuntu:16.04 AS openvino
-LABEL maintainer="Hybridgroup"
+LABEL maintainer="yourorganizationhere"
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
             git software-properties-common lsb-release build-essential cmake pkg-config wget sudo cpio libcurl4-openssl-dev libssl-dev && \
             rm -rf /var/lib/apt/lists/*
 
-ARG OPENVINO_DOWNLOAD_URL="http://registrationcenter-download.intel.com/akdlm/irc_nas/14920/l_openvino_toolkit_p_2018.4.420.tgz"
+ARG OPENVINO_DOWNLOAD_URL 
 ENV OPENVINO_DOWNLOAD_URL $OPENVINO_DOWNLOAD_URL
 
 RUN wget -O /tmp/openvino.tar.gz ${OPENVINO_DOWNLOAD_URL} && \
@@ -21,7 +21,7 @@ RUN wget -O /tmp/openvino.tar.gz ${OPENVINO_DOWNLOAD_URL} && \
 #  Go + OpenVINO  #
 ###################
 FROM openvino AS openvino-go
-LABEL maintainer="Hybridgroup"
+LABEL maintainer="yourorganizationhere"
 
 ARG GOVERSION=1.11.2
 ENV GOVERSION $GOVERSION
@@ -43,7 +43,7 @@ WORKDIR $GOPATH
 #  OpenVINO Go app  #
 #####################
 FROM openvino-go AS openvino-go-app
-LABEL maintainer="Hybridgroup"
+LABEL maintainer="yourorganizationhere"
 
 COPY . /go/src/github.com/hybridgroup/monitor
 WORKDIR /go/src/github.com/hybridgroup/monitor
