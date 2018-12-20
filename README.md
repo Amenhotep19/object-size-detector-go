@@ -48,18 +48,18 @@ You must install the Go programming language version 1.11+ in order to compile t
 
 For an excellent introduction to the Go programming language, check out the online tour at https://tour.golang.org
 
-### Download the reference platform code using Git
+### Download the reference platform code using "go get"
 
-You can download the reference platform code onto your computer by using the following Git command:
+You can download the reference platform code onto your computer by using the following Go command:
 
 ```shell
-git clone https://github.com/intel-iot-devkit/object-size-detector-go.git
+go get -d github.com/intel-iot-devkit/object-size-detector-go
 ```
 
-Then, change the current directory to where you have git cloned the application code to continue the installation steps:
+Then, change the current directory to where you have installed the application code to continue the installation steps:
 
 ```shell
-cd object-size-detector-go
+cd $GOPATH/src/github.com/intel-iot-devkit/object-size-detector-go
 ```
 
 ### Install Dep
@@ -203,7 +203,7 @@ First you must obtain your own unique download URL for the Intel distribution of
 
 ![OpenVINO download page](./images/openvino-download.png)
 
-First, navigate to the download page using the link you have received. On the download page, use the "Choose Product to Download" selection box and select "Intel Distribution of OpenVINO toolkit for Linux". Next, using the "Choose a Version" selection box, select "2018 R4". The "Choose a Download Option" section should appear. Right click on the button "Full Package" and choose "Copy Link Address". Your clipboard should now contain your unique OpenVINO download URL. Save this URL somewhere safe.
+First, navigate to the download page using the link you have received. On the download page, use the "Choose Product to Download" selection box and select "Intel Distribution of OpenVINO toolkit for Linux". Next, using the "Choose a Version" selection box, select "2018 R5". The "Choose a Download Option" section should appear. Right click on the button "Full Package" and choose "Copy Link Address". Your clipboard should now contain your unique OpenVINO download URL. Save this URL somewhere safe.
 
 Now you can build your unique Docker image by running the following command, substituting the actual URL you obtained in the previous step:
 
